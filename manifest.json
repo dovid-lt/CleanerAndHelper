@@ -1,7 +1,7 @@
 {
   "name": "Cleaner And Helper",
   "version": "0.0.1",
-  "description": "Prevents annoying advertisements and improves convenience, designed for Netflix users",
+  "description": "Prevents annoying advertisements and improves convenience, designed for Netfree users",
   "manifest_version": 2,
   "icons": {
     "16": "media2/16.png",
