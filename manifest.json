@@ -12,7 +12,7 @@
     {
       "matches": [ "https://www.jdn.co.il/*"  ],
       "run_at": "document_end",
-      "js": [ "blocker.js" ],
+      "js": [ "jdn.js" ],
       "css": [ "style.css" ]
     }
   ],
