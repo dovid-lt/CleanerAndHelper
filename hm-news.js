@@ -1,10 +1,11 @@
 const DEL_SELECTOR = `
-div[id^='divB'],
 div[id^='advads'],
-.jdn-pirsum,
-script[type$='-text/javascript'],
-script[src='https://www.jdn.co.il/wp-content/plugins/jdn_ads/js/info.js'],
-iframe[title="geula"]
+script#flowplayer-js-extra,
+script#fv_player_pro-js,
+script#flowplayer-hlsjs-js,
+script#fv_player_pro-js-extra,
+script#flowplayer-js,
+style#fv_player_lightbox-css
 `;
 
 const mo = new MutationObserver(onMutation);
@@ -42,9 +43,10 @@ function observe() { mo.observe(document, { subtree: true, childList: true, }); 
 window.addEventListener('DOMContentLoaded', (event) => {
   var divsPlayer = document.querySelectorAll(".flowplayer");
 
-  for (const player of divsPlayer)
-    if (player.dataset.item) {
-      let parsed = JSON.parse(player.dataset.item);
+  for (const player of divsPlayer) {
+    var item = null;
+    if ((item = player.dataset.item || player.parentNode.querySelector("div.fp-playlist-external>a:last-child")?.dataset.item)) {
+      let parsed = JSON.parse(item);
       if (!parsed.sources || !parsed.sources.length) continue;
       let props = parsed.sources[0];
       let newV = document.createElement('video');
@@ -54,6 +56,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
       newV.controls = true;
       player.replaceWith(newV);
     }
+  }
     
 });
 
