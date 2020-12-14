@@ -5,7 +5,9 @@ script#fv_player_pro-js,
 script#flowplayer-hlsjs-js,
 script#fv_player_pro-js-extra,
 script#flowplayer-js,
-style#fv_player_lightbox-css
+style#fv_player_lightbox-css,
+div.elementor-widget-wp-widget-advads_ad_widget
+
 `;
 
 const mo = new MutationObserver(onMutation);
