@@ -46,20 +46,25 @@ window.addEventListener('DOMContentLoaded', (event) => {
   var divsPlayer = document.querySelectorAll(".flowplayer");
 
   for (const player of divsPlayer) {
-    var item = null;
-    if ((item = player.dataset.item || player.parentNode.querySelector("div.fp-playlist-external>a:last-child")?.dataset.item)) {
+    var props;
+    var item = player.dataset.item;
+    if (item) {
       let parsed = JSON.parse(item);
-      if (!parsed.sources || !parsed.sources.length) continue;
-      let props = parsed.sources[0];
-      let newV = document.createElement('video');
-      newV.classList.add("flowplayer");
-      newV.src = props.src;
-      newV.type = props.type;
-      newV.controls = true;
-      player.replaceWith(newV);
+      props = parsed.sources[0];
+    } else {
+      var a_items = player.parentNode.querySelectorAll("div.fp-playlist-external>a");
+      props = [...a_items].map(x => JSON.parse(x?.dataset.item)).filter(x => !x.click && x.fv_title != "Video Ad:hamechadesh")[0]?.sources[0];
     }
+
+    if (!props) continue;
+
+    let newV = document.createElement('video');
+    newV.classList.add("flowplayer");
+    newV.src = props.src;
+    newV.type = props.type;
+    newV.controls = true;
+    player.replaceWith(newV);
   }
-    
 });
 
 

@@ -1,11 +1,15 @@
 const DEL_SELECTOR = `
-div[id^='divB'],
 div[id^='advads'],
+div[id^='div-gpt-ad'],
 .jdn-pirsum,
-script[type$='-text/javascript'],
-script[src='https://www.jdn.co.il/wp-content/plugins/jdn_ads/js/info.js'],
-iframe[title="geula"]
+script[src^='https://www.jdn.co.il/wp-content/uploads/452'],
+script[src^='https://www.jdn.co.il/wp-content/plugins/jdn_ads/'],
+iframe[title="geula"],
+iframe[title="medame"],
+iframe[title="dosiz"]
 `;
+
+const blackListJs = ['fortcdn.com', 'ads', 'Ads'];
 
 const mo = new MutationObserver(onMutation);
 onMutation([{ addedNodes: [document.documentElement] }]);
@@ -19,8 +23,9 @@ function onMutation(mutations) {
   for (const { addedNodes } of mutations)
     for (const n of addedNodes) {
       if (!n.tagName) continue;
-
-      if (n.matches(DEL_SELECTOR))
+      if(n.tagName == 'SCRIPT' && !n.src && blackListJs.some(x => n.innerText.includes(x)))
+         toRemove.push(n);
+      else if (n.matches(DEL_SELECTOR))
         toRemove.push(n);
       else if (n.firstElementChild && n.querySelector(DEL_SELECTOR)) {
         toRemove.push(...n.querySelectorAll(DEL_SELECTOR));
