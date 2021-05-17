@@ -53,7 +53,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
       props = parsed.sources[0];
     } else {
       var a_items = player.parentNode.querySelectorAll("div.fp-playlist-external>a");
-      props = [...a_items].map(x => JSON.parse(x?.dataset.item)).filter(x => !x.click && x.fv_title != "Video Ad:hamechadesh")[0]?.sources[0];
+      props = [...a_items].map(x => JSON.parse(x?.dataset.item)).filter(x => !("click" in x) && x.fv_title != "Video Ad:hamechadesh")[0]?.sources[0];
     }
 
     if (!props) continue;

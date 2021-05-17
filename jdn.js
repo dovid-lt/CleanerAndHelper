@@ -2,11 +2,21 @@ const DEL_SELECTOR = `
 div[id^='advads'],
 div[id^='div-gpt-ad'],
 .jdn-pirsum,
+script#flowplayer-js-extra,
+script#fv_player_pro-js,
+script#flowplayer-hlsjs-js,
+script#fv_player_pro-js-extra,
+script#flowplayer-js,
+style#fv_player_lightbox-css,
+script#fv_vast-js,
+
 script[src^='https://www.jdn.co.il/wp-content/uploads/452'],
 script[src^='https://www.jdn.co.il/wp-content/plugins/jdn_ads/'],
 iframe[title="geula"],
 iframe[title="medame"],
 iframe[title="dosiz"]
+
+
 `;
 
 const blackListJs = ['fortcdn.com', 'ads', 'Ads'];
@@ -23,9 +33,9 @@ function onMutation(mutations) {
   for (const { addedNodes } of mutations)
     for (const n of addedNodes) {
       if (!n.tagName) continue;
-      if(n.tagName == 'SCRIPT' && !n.src && blackListJs.some(x => n.innerText.includes(x)))
-         toRemove.push(n);
-      else if (n.matches(DEL_SELECTOR))
+      if (n.matches(DEL_SELECTOR))
+        toRemove.push(n);
+      else if (n.tagName == 'SCRIPT' && !n.src && blackListJs.some(x => n.innerText.includes(x)))
         toRemove.push(n);
       else if (n.firstElementChild && n.querySelector(DEL_SELECTOR)) {
         toRemove.push(...n.querySelectorAll(DEL_SELECTOR));
@@ -47,19 +57,29 @@ function observe() { mo.observe(document, { subtree: true, childList: true, }); 
 window.addEventListener('DOMContentLoaded', (event) => {
   var divsPlayer = document.querySelectorAll(".flowplayer");
 
-  for (const player of divsPlayer)
-    if (player.dataset.item) {
-      let parsed = JSON.parse(player.dataset.item);
-      if (!parsed.sources || !parsed.sources.length) continue;
-      let props = parsed.sources[0];
-      let newV = document.createElement('video');
-      newV.classList.add("flowplayer");
-      newV.src = props.src;
-      newV.type = props.type;
-      newV.controls = true;
-      player.replaceWith(newV);
+  for (const player of divsPlayer) {
+
+    let props;
+    let item = player.dataset.item;
+    if (item) {
+      let parsed = JSON.parse(item);
+      props = parsed.sources[0];
+    } else {
+      let a_items = player.parentNode.querySelectorAll("div.fp-playlist-external[rel='" + player.id  +  "']>a");
+      console.log([...a_items]);
+      props = [...a_items].map(x => JSON.parse(x?.dataset.item)).filter(x => !("click" in x) && x.fv_title != "Video Ad:youp")[0]?.sources[0];
     }
-    
+
+    if (!props) continue;
+
+    let newV = document.createElement('video');
+    newV.classList.add("flowplayer");
+    newV.src = props.src;
+    newV.type = props.type;
+    newV.controls = true;
+    player.replaceWith(newV);
+  }
+
 });
 
 
