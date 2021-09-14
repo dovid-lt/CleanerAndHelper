@@ -25,6 +25,8 @@ script#advadsTrackingDelayed-js,
 
 script[src^='https://www.jdn.co.il/wp-content/uploads/452'],
 script[src^='https://www.jdn.co.il/wp-content/plugins/jdn_ads/'],
+
+iframe[src^='https://advertising'],
 iframe[loading="lazy"],
 iframe[title="geula"],
 iframe[title="medame"],
