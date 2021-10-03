@@ -1,10 +1,8 @@
 const key = 'lastNews';
-let curr = localStorage.getItem(key);
+const lastRead = localStorage.getItem(key);
 
 document.addEventListener('DOMContentLoaded', function () {
-  let flashes = document.getElementById('newsFlash');
-  if (flashes)
-    flashes.remove();
+  document.getElementById('newsFlash')?.remove();
 
   let container = document.getElementById('listFlash');
   let it = container.children[Symbol.iterator]()
@@ -17,21 +15,19 @@ document.addEventListener('DOMContentLoaded', function () {
   let currDate = Date.now();
   let counter = 0;
 
-  if (curr) {
+  if (lastRead) {
     container.classList.add('ext-c');
-    while (!result.done) {
-      if (result.value.id <= curr) break;
+    do {
+      if (result.value.id <= lastRead) break;
       counter++;
       result.value.classList.add('new-item');
       humanDate(result.value.children[0], currDate);
 
       result = it.next();
-    }
+    } while (!result.done)
   }
 
-  setTimeout(() => {
-    localStorage.setItem(key, last);
-  }, curr ? Math.max(counter, 5) * 3000 : 5000);
+  setTimeout(() => localStorage.setItem(key, last), counter ? Math.max(counter, 5) * 3000 : 5000);
 
 });
 
