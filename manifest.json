@@ -1,6 +1,6 @@
 {
   "name": "Cleaner And Helper",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Prevents annoying advertisements and improves convenience, designed for Netfree users",
   "manifest_version": 2,
   "icons": {
@@ -10,21 +10,35 @@
   },
   "content_scripts": [
     {
-      "matches": [ "https://www.jdn.co.il/*"  ],
+      "matches": [ "https://www.jdn.co.il/*" ],
       "run_at": "document_start",
       "js": [ "jdn.js" ]
-    }, {
-      "matches": [ "https://hm-news.co.il/*"  ],
+    },
+    {
+      "matches": ["https://hm-news.co.il/*" ],
       "run_at": "document_start",
       "js": [ "hm-news.js" ]
+    },
+    {
+      "matches": [ "https://www.kore.co.il/*"  ],
+      "run_at": "document_start",
+      "js": [ "kore.js" ]
+    },
+    {
+      "matches": [ "https://www.kore.co.il/flashNews*"  ],
+      "run_at": "document_start",
+      "js": [ "kore-flashNews.js" ],
+      "css": [ "kore-flashNews.css"]
     }
+    
   ],
   "permissions": [
     "webRequest",
     "webRequestBlocking",
     "https://www.jdn.co.il/*",
     "https://info.jdn.co.il/*",
-    "https://hm-news.co.il/*"
+    "https://hm-news.co.il/*",
+    "https://www.kore.co.il/*"
   ],
   "background": {
     "scripts": [
