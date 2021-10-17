@@ -1,4 +1,5 @@
 const DEL_SELECTOR = `
+iframe[data-src^="https://ads.hm-news.co.il"],
 div[id^='advads'],
 script#flowplayer-js-extra,
 script#fv_player_pro-js,
@@ -11,7 +12,16 @@ div.elementor-widget-wp-widget-advads_ad_widget,
 script#advanced-ads-advanced-js-js,
 script#advanced-ads-responsive-js-extra,
 script#advanced-ads-pro\\/cache_busting-js,
-script#advanced-ads-pro\\/cache_busting-js-extra
+script#advanced-ads-pro\\/cache_busting-js-extra,
+
+
+script#advadsTrackingDelayed-js,
+script#advadsTrackingScript-js,
+script#advadsTrackingScript-js-extra,
+script#advanced-ads-responsive-js,
+script#advanced-ads-pro\\/cache_busting-js-extra,
+script#advanced-ads-layer-footer-js-js-extra,
+script#advads-ready
 `;
 
 const blackListJs = ['advads_passive_placements', 'advanced_ads_ready', 'Ads', 'ads'];

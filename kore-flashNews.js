@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } while (!result.done)
   }
 
-  setTimeout(() => localStorage.setItem(key, last), counter ? Math.max(counter, 5) * 3000 : 5000);
+  setTimeout(() => localStorage.setItem(key, last), counter ? Math.min(counter, 5) * 3000 : 5000);
 
 });
 
