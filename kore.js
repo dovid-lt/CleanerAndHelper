@@ -8,6 +8,9 @@ const mo = new MutationObserver(onMutation);
 onMutation([{ addedNodes: [document.documentElement] }]);
 observe();
 
+
+
+
 function onMutation(mutations) {
   const toRemove = [];
   for (const { addedNodes } of mutations)
@@ -28,3 +31,13 @@ function onMutation(mutations) {
 }
 
 function observe() { mo.observe(document, { subtree: true, childList: true, }); }
+
+let dismisseExpire = localStorage.getItem('onesignal-notification-prompt');
+if (dismisseExpire) {
+  let data = JSON.parse(dismisseExpire);
+  if (!data.CleanerExt && data.value == '"dismissed"') {
+    data.timestamp = 1896127200000;
+    data.CleanerExt = true;
+    localStorage.setItem('onesignal-notification-prompt', JSON.stringify(data));
+  }
+}
