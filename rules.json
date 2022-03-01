@@ -1,0 +1,15 @@
+[
+    {
+        "id": 1,
+        "priority": 1,
+        "action": { "type": "block" },
+        "condition": {"urlFilter": "||info.jdn.co.il||", "resourceTypes": ["main_frame"] }
+      },
+      {
+        "id": 2,
+        "priority": 1,
+        "action": { "type": "block" },
+        "condition": {"urlFilter": "*www.jdn.co.il/wp-content/plugins/jdn_ads/js/info.js", "resourceTypes": ["script"] }
+      }
+
+]

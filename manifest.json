@@ -2,7 +2,7 @@
   "name": "Cleaner And Helper",
   "version": "0.0.13",
   "description": "Prevents annoying advertisements and improves convenience, designed for Netfree users",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "icons": {
     "16": "media2/16.png",
     "48": "media2/32.png",
@@ -34,15 +34,19 @@
   ],
   "permissions": [
     "webRequest",
-    "webRequestBlocking",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
     "https://www.jdn.co.il/*",
     "https://info.jdn.co.il/*",
     "https://hm-news.co.il/*",
     "https://www.kore.co.il/*"
   ],
-  "background": {
-    "scripts": [
-      "background.js"
-    ]
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
   }
 }
