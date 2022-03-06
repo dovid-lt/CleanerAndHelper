@@ -19,9 +19,10 @@ script#advanced_ads_pro\\/visitor_conditions-js,
 script#advanced_ads_pro\\/visitor_conditions-js-extra,
 script#advanced-ads-pro\\/cache_busting-js,
 script#advanced-ads-pro\\/cache_busting-js-extra,
-script#advanced-ds-pro\\/front-js,
+script#advanced-ads-pro\\/front-js,
 script#advadsTrackingScript-js,
 script#advadsTrackingDelayed-js,
+script#advads-ready,
 
 script[src^='https://www.jdn.co.il/wp-content/uploads/452'],
 script[src^='https://www.jdn.co.il/wp-content/plugins/jdn_ads/'],
@@ -35,7 +36,7 @@ iframe[title="dosiz"]
 
 `;
 
-const blackListJs = ['fortcdn.com', 'ads', 'Ads'];
+const blackListJs = ['fortcdn.com', 'advertising', 'ads', 'Ads'];
 
 const mo = new MutationObserver(onMutation);
 onMutation([{ addedNodes: [document.documentElement] }]);
@@ -51,7 +52,7 @@ function onMutation(mutations) {
       if (!n.tagName) continue;
       if (n.matches(DEL_SELECTOR))
         toRemove.push(n);
-      else if (n.tagName == 'SCRIPT' && !n.src && blackListJs.some(x => n.innerText.includes(x)))
+      else if (n.tagName == 'SCRIPT' && !n.src  && blackListJs.some(x => n.innerText.includes(x)))
         toRemove.push(n);
       else if (n.firstElementChild && n.querySelector(DEL_SELECTOR)) {
         toRemove.push(...n.querySelectorAll(DEL_SELECTOR));

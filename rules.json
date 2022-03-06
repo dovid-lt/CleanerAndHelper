@@ -10,6 +10,18 @@
         "priority": 1,
         "action": { "type": "block" },
         "condition": {"urlFilter": "*www.jdn.co.il/wp-content/plugins/jdn_ads/js/info.js", "resourceTypes": ["script"] }
+      },
+      {
+        "id": 3,
+        "priority": 1,
+        "action": { "type": "block" },
+        "condition": {"urlFilter": "||ext.kore.co.il||", "resourceTypes": ["script"] }
+      },
+      {
+        "id": 4,
+        "priority": 1,
+        "action": { "type": "block" },
+        "condition": {"urlFilter": "||advertising.jdn.co.il||", "resourceTypes": ["script"] }
       }
 
 ]

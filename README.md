@@ -1,8 +1,11 @@
 # CleanerAndHelper
 
-תוסף בקוד פתוח, מתוכנן בעיקר לגולשים באינטרנט של נטפרי.
+
+תוסף כרומיום בקוד פתוח, מתוכנן בעיקר לגולשים באינטרנט של נטפרי.
 המטרה היא ניקוי פרסומות מציקות (בינתיים JDN).
 
+כתובת בחנות התוספים
+https://chrome.google.com/webstore/detail/abceolommehmfcheephklpllmcocgmol
 
 מפותח ע"י מפתחים מאתר tchumim.com.
 
