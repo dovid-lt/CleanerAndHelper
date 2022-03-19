@@ -23,20 +23,19 @@ script#advanced-ads-pro\\/front-js,
 script#advadsTrackingScript-js,
 script#advadsTrackingDelayed-js,
 script#advads-ready,
-
-script[src^='https://www.jdn.co.il/wp-content/uploads/452'],
-script[src^='https://www.jdn.co.il/wp-content/plugins/jdn_ads/'],
+script[src^='https://www.jdn.co.il/wp-content/uploads'],
+script[src^='https://www.jdn.co.il/wp-content/plugins/jdn_ads'],
 
 iframe[src^='https://advertising'],
 iframe[loading="lazy"],
 iframe[title="geula"],
 iframe[title="medame"],
 iframe[title="dosiz"]
-
-
 `;
 
-const blackListJs = ['fortcdn.com', 'advertising', 'ads', 'Ads'];
+
+
+const blackListJs = ['fortcdn.com', 'advertising', 'Ads'];
 
 const mo = new MutationObserver(onMutation);
 onMutation([{ addedNodes: [document.documentElement] }]);

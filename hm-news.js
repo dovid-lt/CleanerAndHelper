@@ -24,7 +24,7 @@ script#advanced-ads-layer-footer-js-js-extra,
 script#advads-ready
 `;
 
-const blackListJs = ['advads_passive_placements', 'advanced_ads_ready', 'Ads', 'ads'];
+const blackListJs = ['advads_passive_placements', 'advanced_ads_ready', 'Ads'];
 
 
 const mo = new MutationObserver(onMutation);
