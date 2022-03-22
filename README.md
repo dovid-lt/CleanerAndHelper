@@ -1,6 +1,5 @@
 # CleanerAndHelper
 
-
 תוסף כרומיום בקוד פתוח, מתוכנן בעיקר לגולשים באינטרנט של נטפרי.
 המטרה היא ניקוי פרסומות מציקות (בינתיים JDN).
 
@@ -19,6 +18,10 @@ https://chrome.google.com/webstore/detail/abceolommehmfcheephklpllmcocgmol
 4. הסרת סקריפטים וCSS שנראים לפרסומות
 
 #### hm-news.co.il - המחדש
+
+כנ"ל.
+
+#### bahazit.co.il - בחזית
 
 כנ"ל.
 
