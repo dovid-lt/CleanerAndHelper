@@ -27,78 +27,58 @@ script#advads-ready
 const blackListJs = ['advads_passive_placements', 'advanced_ads_ready', 'Ads'];
 
 
-const mo = new MutationObserver(onMutation);
-onMutation([{ addedNodes: [document.documentElement] }]);
-observe();
-
-
-
-
-function onMutation(mutations) {
-  const toRemove = [];
+function* elementsSelector(mutations) {
   for (const { addedNodes } of mutations)
     for (const n of addedNodes) {
       if (!n.tagName) continue;
-      if (n.matches(DEL_SELECTOR))
-        toRemove.push(n);
-      else if (n.tagName == 'SCRIPT' && !n.src && blackListJs.some(x => n.innerText.includes(x)))
-        toRemove.push(n);
-      else if (n.firstElementChild && n.querySelector(DEL_SELECTOR)) {
-        toRemove.push(...n.querySelectorAll(DEL_SELECTOR));
-      }
+      if (n.matches(DEL_SELECTOR) || (n.tagName == 'SCRIPT' && blackListJs.some(x => n.innerText.includes(x))))
+        yield () => n.remove();
+      else if (n.firstElementChild)
+        for (const iterator of n.querySelectorAll(DEL_SELECTOR))
+          yield () => iterator.remove();
+
+      if (n.matches('.elementor-widget-jet-video'))
+        jetVideo(n);
+      else if (n.matches('.flowplayer'))
+        flowplayer(n);
+
     }
-
-
-  if (toRemove.length) {
-    mo.disconnect();
-    for (const el of toRemove) el.remove();
-    observe();
-  }
 }
 
-function observe() { mo.observe(document, { subtree: true, childList: true, }); }
+ObserveForDocument(elementsSelector, document)
 
 
 
-window.addEventListener('DOMContentLoaded', (event) => {
-  var divsPlayerFlow = document.querySelectorAll(".flowplayer");
-
-  for (const player of divsPlayerFlow) {
-    let props;
-    let item = player.dataset.item;
-    if (item) {
-      let parsed = JSON.parse(item);
-      props = parsed.sources[0];
-    } else {
-      let a_items = player.parentNode.querySelectorAll("div.fp-playlist-external>a");
-      props = [...a_items].map(x => JSON.parse(x?.dataset.item)).filter(x => !("click" in x) && x.fv_title != "Video Ad:hamechadesh")[0]?.sources[0];
-    }
-
-    if (!props) continue;
-
-    let newV = document.createElement('video');
-    newV.classList.add("flowplayer");
-    newV.src = props.src;
-    newV.type = props.type;
-    newV.controls = true;
-    newV.style.maxHeight = '80vh'
-    player.replaceWith(newV);
+function flowplayer(player) {
+  let props;
+  let item = player.dataset.item;
+  if (item) {
+    let parsed = JSON.parse(item);
+    props = parsed.sources[0];
+  } else {
+    let a_items = player.parentNode.querySelectorAll("div.fp-playlist-external>a");
+    props = [...a_items].map(x => JSON.parse(x?.dataset.item)).filter(x => !("click" in x) && x.fv_title != "Video Ad:hamechadesh")[0]?.sources[0];
   }
 
-  var divsPlayerJet = document.querySelectorAll(".elementor-widget-jet-video");
+  if (!props) return;
 
-  for (const player of divsPlayerJet) {
-    let dataEl = player.querySelector('.jet-video__overlay');
-    if(!dataEl) continue;
+  let newV = document.createElement('video');
+  newV.classList.add("flowplayer");
+  newV.src = props.src;
+  newV.type = props.type;
+  newV.controls = true;
+  newV.style.maxHeight = '80vh'
+  player.replaceWith(newV);
+}
 
-    let newV = document.createElement('video');
-    newV.src =  JSON.parse(dataEl.dataset.elementorLightbox)?.url;
-    newV.controls = true;
-    newV.style.maxHeight = '80vh';
-    dataEl.parentNode.replaceWith(newV);
-  }
+function jetVideo(player) {
+  let dataEl = player.querySelector('.jet-video__overlay');
+  if (!dataEl) return;
 
-});
-
-
+  let newV = document.createElement('video');
+  newV.src = JSON.parse(dataEl.dataset.elementorLightbox)?.url;
+  newV.controls = true;
+  newV.style.maxHeight = '80vh';
+  dataEl.parentNode.replaceWith(newV);
+}
 

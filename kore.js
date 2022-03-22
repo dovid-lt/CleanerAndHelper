@@ -4,33 +4,21 @@ const DEL_SELECTOR = `
 .center-block,
 .visible-xlg`;
 
-const mo = new MutationObserver(onMutation);
-onMutation([{ addedNodes: [document.documentElement] }]);
-observe();
 
-
-
-
-function onMutation(mutations) {
-  const toRemove = [];
+function* elementsSelector(mutations) {
   for (const { addedNodes } of mutations)
     for (const n of addedNodes) {
       if (!n.tagName) continue;
-      if (n.matches(DEL_SELECTOR))
-        toRemove.push(n);
-      else if (n.firstElementChild && n.querySelector(DEL_SELECTOR)) {
-        toRemove.push(...n.querySelectorAll(DEL_SELECTOR));
-      }
+      if (n.matches(DEL_SELECTOR) || (n.tagName == 'SCRIPT' && blackListJs.some(x => n.innerText.includes(x))))
+        yield () => n.remove();
+      else if (n.firstElementChild)
+        for (const iterator of n.querySelectorAll(DEL_SELECTOR))
+          yield () => iterator.remove();
     }
-
-  if (toRemove.length) {
-    mo.disconnect();
-    for (const el of toRemove) el.remove();
-    observe();
-  }
 }
 
-function observe() { mo.observe(document, { subtree: true, childList: true, }); }
+ObserveForDocument(elementsSelector, document)
+
 
 let dismisseExpire = localStorage.getItem('onesignal-notification-prompt');
 if (dismisseExpire) {
