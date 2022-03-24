@@ -50,7 +50,7 @@ function* elementsSelector(mutations) {
       if (n.matches('.wp-video'))
         wpVideoHandel(n);
       else if (n.matches('.flowplayer'))
-        wpVideoHandel(n);
+        flowplayerHandel(n);
 
     }
 }
@@ -61,7 +61,7 @@ ObserveForDocument(elementsSelector, document)
 function wpVideoHandel(div) {
   const src = div.querySelector('source')?.src;
   if (src)
-    div.outerHTML = `<video controls src="${src}"></video>`;
+    div.outerHTML = `<video controls style="max-height: 80hv" src="${src}"></video>`;
 }
 
 function flowplayerHandel(player) {
@@ -83,6 +83,7 @@ function flowplayerHandel(player) {
   newV.src = props.src;
   newV.type = props.type;
   newV.controls = true;
+  newV.style.maxHeight = '80vh';
   player.replaceWith(newV);
 }
 

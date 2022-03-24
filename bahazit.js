@@ -60,7 +60,7 @@ function ElitVideoHandel(element){
     const opt = element.querySelector('div#elite_options')?.innerText;
     if (opt) {
         const src = /mp4HD":"([^"]+)"/.exec(opt) || /mp4SD":"([^"]+)"/.exec(opt);
-        element.outerHTML = `<video controls src="${src[1].replace(/\\\//g, '/')}"></video>`;
+        element.outerHTML = `<video  style="max-height: 80hv" controls src="${src[1].replace(/\\\//g, '/')}"></video>`;
     }
 }
 

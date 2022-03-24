@@ -4,12 +4,13 @@ const DEL_SELECTOR = `
 .center-block,
 .visible-xlg`;
 
+const blackListJs = [];
 
 function* elementsSelector(mutations) {
   for (const { addedNodes } of mutations)
     for (const n of addedNodes) {
       if (!n.tagName) continue;
-      if (n.matches(DEL_SELECTOR) || (n.tagName == 'SCRIPT' && blackListJs.some(x => n.innerText.includes(x))))
+      if (n.matches(DEL_SELECTOR))
         yield () => n.remove();
       else if (n.firstElementChild)
         for (const iterator of n.querySelectorAll(DEL_SELECTOR))
