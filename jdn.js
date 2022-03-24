@@ -37,10 +37,8 @@ iframe[title="dosiz"]
 
 const blackListJs = ['fortcdn.com', 'advertising', 'Ads'];
 
-function* elementsSelector(mutations) {
-  for (const { addedNodes } of mutations)
-    for (const n of addedNodes) {
-      if (!n.tagName) continue;
+function* elementsSelector(n) {
+      if (!n.tagName) return;
       if (n.matches(DEL_SELECTOR) || (n.tagName == 'SCRIPT' && blackListJs.some(x => n.innerText.includes(x))))
         yield () => n.remove();
       else if (n.firstElementChild)
@@ -51,8 +49,6 @@ function* elementsSelector(mutations) {
         wpVideoHandel(n);
       else if (n.matches('.flowplayer'))
         flowplayerHandel(n);
-
-    }
 }
 
 ObserveForDocument(elementsSelector, document)

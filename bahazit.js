@@ -37,30 +37,30 @@ function findParent(el, sel) {
     console.log('not found');
 }
 
-function* elementsSelector(mutations) {
-    for (const { addedNodes } of mutations)
-        for (const n of addedNodes) {
-            if (!n.tagName) continue;
-            if (n.matches(DEL_SELECTOR) || (n.tagName == 'SCRIPT' && blackListJs.some(x => n.innerText.includes(x))))
-                yield () => n.remove();
-            if (n.matches('.bahazithead, div[data-advadstrackid]'))
-                yield () => findParent(n, PARENTS)?.remove();
-            else if (n.firstElementChild)
-                for (const iterator of n.querySelectorAll(DEL_SELECTOR))
-                    yield () => iterator.remove();
+function* elementsSelector(n) {
+    if (!n.tagName) return;
+    if (n.matches(DEL_SELECTOR) || (n.tagName == 'SCRIPT' && blackListJs.some(x => n.innerText.includes(x))))
+        yield () => n.remove();
+    if (n.matches('.bahazithead, div[data-advadstrackid]'))
+        yield () => findParent(n, PARENTS)?.remove();
+    else if (n.firstElementChild)
+        for (const iterator of n.querySelectorAll(DEL_SELECTOR))
+            yield () => iterator.remove();
 
 
-            if (n.matches('.Elite_video_player'))
-                yield () =>  ElitVideoHandel(n);
-        }
+    if (n.matches('.Elite_video_player'))
+        yield () => ElitVideoHandel(n);
 }
 
 
-function ElitVideoHandel(element){
-    const opt = element.querySelector('div#elite_options')?.innerText;
-    if (opt) {
-        const src = /mp4HD":"([^"]+)"/.exec(opt) || /mp4SD":"([^"]+)"/.exec(opt);
-        element.outerHTML = `<video  style="max-height: 80hv" controls src="${src[1].replace(/\\\//g, '/')}"></video>`;
+function ElitVideoHandel(element) {
+    const txtOpt = element.querySelector('div#elite_options')?.innerText;
+    try {
+        const obj = JSON.parse(txtOpt)
+        const video = obj.html5videos_hd || obj.html5videos_sd;
+        element.outerHTML = `<video  style="max-height: 80vh" controls src="${video}"></video>`;
+    } catch (error) {
+        console.error('CleanerAndHelper dont success parse video data', element)
     }
 }
 

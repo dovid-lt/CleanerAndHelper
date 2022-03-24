@@ -27,22 +27,18 @@ script#advads-ready
 const blackListJs = ['advads_passive_placements', 'advanced_ads_ready', 'Ads'];
 
 
-function* elementsSelector(mutations) {
-  for (const { addedNodes } of mutations)
-    for (const n of addedNodes) {
-      if (!n.tagName) continue;
-      if (n.matches(DEL_SELECTOR) || (n.tagName == 'SCRIPT' && blackListJs.some(x => n.innerText.includes(x))))
-        yield () => n.remove();
-      else if (n.firstElementChild)
-        for (const iterator of n.querySelectorAll(DEL_SELECTOR))
-          yield () => iterator.remove();
+function* elementsSelector(n) {
+  if (!n.tagName) return;
+  if (n.matches(DEL_SELECTOR) || (n.tagName == 'SCRIPT' && blackListJs.some(x => n.innerText.includes(x))))
+    yield () => n.remove();
+  else if (n.firstElementChild)
+    for (const iterator of n.querySelectorAll(DEL_SELECTOR))
+      yield () => iterator.remove();
 
-      if (n.matches('.elementor-widget-jet-video'))
-        jetVideo(n);
-      else if (n.matches('.flowplayer'))
-        flowplayer(n);
-
-    }
+  if (n.matches('.elementor-widget-jet-video'))
+    jetVideo(n);
+  else if (n.matches('.flowplayer'))
+    flowplayer(n);
 }
 
 ObserveForDocument(elementsSelector, document)

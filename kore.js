@@ -6,17 +6,15 @@ const DEL_SELECTOR = `
 
 const blackListJs = [];
 
-function* elementsSelector(mutations) {
-  for (const { addedNodes } of mutations)
-    for (const n of addedNodes) {
-      if (!n.tagName) continue;
-      if (n.matches(DEL_SELECTOR))
-        yield () => n.remove();
-      else if (n.firstElementChild)
-        for (const iterator of n.querySelectorAll(DEL_SELECTOR))
-          yield () => iterator.remove();
-    }
+function* elementsSelector(n) {
+  if (!n.tagName) return;
+  if (n.matches(DEL_SELECTOR))
+    yield () => n.remove();
+  else if (n.firstElementChild)
+    for (const iterator of n.querySelectorAll(DEL_SELECTOR))
+      yield () => iterator.remove();
 }
+
 
 ObserveForDocument(elementsSelector, document)
 
