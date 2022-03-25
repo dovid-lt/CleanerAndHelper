@@ -1,4 +1,4 @@
-function ObserveForDocument(elementsSelector, document) {
+function ObserveForDocument(actionForElement, document) {
     let isConnected = false;
     const mo = new MutationObserver(onMutation);
     onMutation([{ addedNodes: [document.documentElement] }]);
@@ -6,9 +6,9 @@ function ObserveForDocument(elementsSelector, document) {
 
 
     function* getActions(mutations) {
-        for (const { addedNodes } of mutations)
-            for (const n of addedNodes)
-                yield* elementsSelector(n);
+        for (const m of mutations)
+            for (const n of m.addedNodes)
+                yield* actionForElement(n);
     }
 
     function onMutation(mutations) {
@@ -20,8 +20,7 @@ function ObserveForDocument(elementsSelector, document) {
                 mo.disconnect();
 
             do{
-                if(result.value)
-                    result.value();
+                result.value?.();
                 result = actions.next();
             } while(!result.done)
 
