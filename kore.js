@@ -6,17 +6,17 @@ const DEL_SELECTOR = `
 
 const blackListJs = [];
 
-function* elementsSelector(n) {
-  if (!n.tagName) return;
-  if (n.matches(DEL_SELECTOR))
-    yield () => n.remove();
-  else if (n.firstElementChild)
-    for (const iterator of n.querySelectorAll(DEL_SELECTOR))
+function* actionForElement(el) {
+  if (!el.tagName) return;
+  if (el.matches(DEL_SELECTOR))
+    yield () => el.remove();
+  else if (el.firstElementChild)
+    for (const iterator of el.querySelectorAll(DEL_SELECTOR))
       yield () => iterator.remove();
 }
 
 
-ObserveForDocument(elementsSelector, document)
+ObserveForDocument(actionForElement, document)
 
 
 let dismisseExpire = localStorage.getItem('onesignal-notification-prompt');

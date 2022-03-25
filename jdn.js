@@ -37,21 +37,21 @@ iframe[title="dosiz"]
 
 const blackListJs = ['fortcdn.com', 'advertising', 'Ads'];
 
-function* elementsSelector(n) {
-      if (!n.tagName) return;
-      if (n.matches(DEL_SELECTOR) || (n.tagName == 'SCRIPT' && blackListJs.some(x => n.innerText.includes(x))))
-        yield () => n.remove();
-      else if (n.firstElementChild)
-        for (const iterator of n.querySelectorAll(DEL_SELECTOR))
+function* actionForElement(el) {
+      if (!el.tagName) return;
+      if (el.matches(DEL_SELECTOR) || (el.tagName == 'SCRIPT' && blackListJs.some(x => el.innerText.includes(x))))
+        yield () => el.remove();
+      else if (el.firstElementChild)
+        for (const iterator of el.querySelectorAll(DEL_SELECTOR))
           yield () => iterator.remove();
 
-      if (n.matches('.wp-video'))
-        wpVideoHandel(n);
-      else if (n.matches('.flowplayer'))
-        flowplayerHandel(n);
+      if (el.matches('.wp-video'))
+        wpVideoHandel(el);
+      else if (el.matches('.flowplayer'))
+        flowplayerHandel(el);
 }
 
-ObserveForDocument(elementsSelector, document)
+ObserveForDocument(actionForElement, document)
 
 
 function wpVideoHandel(div) {

@@ -34,22 +34,22 @@ function findParent(el, sel) {
     while (el = el.parentNode)
         if (el.matches(sel))
             return el;
-    console.log('not found');
+    console.error('CleanerAndHelper not found parent element', el);
 }
 
-function* elementsSelector(n) {
-    if (!n.tagName) return;
-    if (n.matches(DEL_SELECTOR) || (n.tagName == 'SCRIPT' && blackListJs.some(x => n.innerText.includes(x))))
-        yield () => n.remove();
-    if (n.matches('.bahazithead, div[data-advadstrackid]'))
-        yield () => findParent(n, PARENTS)?.remove();
-    else if (n.firstElementChild)
-        for (const iterator of n.querySelectorAll(DEL_SELECTOR))
+function* actionForElement(el) {
+    if (!el.tagName) return;
+    if (el.matches(DEL_SELECTOR) || (el.tagName == 'SCRIPT' && blackListJs.some(x => el.innerText.includes(x))))
+        yield () => el.remove();
+    if (el.matches('.bahazithead, div[data-advadstrackid]'))
+        yield () => el.closest(PARENTS)?.remove();
+    else if (el.firstElementChild)
+        for (const iterator of el.querySelectorAll(DEL_SELECTOR))
             yield () => iterator.remove();
 
 
-    if (n.matches('.Elite_video_player'))
-        yield () => ElitVideoHandel(n);
+    if (el.matches('.Elite_video_player'))
+        yield () => ElitVideoHandel(el);
 }
 
 
@@ -60,9 +60,9 @@ function ElitVideoHandel(element) {
         const video = obj.html5videos_hd || obj.html5videos_sd;
         element.outerHTML = `<video  style="max-height: 80vh" controls src="${video}"></video>`;
     } catch (error) {
-        console.error('CleanerAndHelper dont success parse video data', element)
-    }
+        console.error('CleanerAndHelper dont success parse video data', element, error)
+    } 
 }
 
 
-ObserveForDocument(elementsSelector, document)
+ObserveForDocument(actionForElement, document)
