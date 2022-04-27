@@ -1,18 +1,7 @@
-.samBannerUnit {
-  display: none;
-}
-
-.samTextUnit
-.sam-swiper-container,
-.progad,
-.notices,
-.p-body-sidebar,
-.Striptext,
-.samCodeUnit,
-.overlay-container,
-.xenbros_popup,
-.p-body-sidebarCol,
+.samBannerUnit,
 .samTextUnit,
-[data-type='ams_article']{
-  display: none;
+.samCodeUnit,
+.sam-swiper-container,
+.overlay-container {
+  display: none!important;
 }
