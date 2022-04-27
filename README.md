@@ -31,6 +31,11 @@ https://chrome.google.com/webstore/detail/abceolommehmfcheephklpllmcocgmol
 2. הדגשת הודעות חדשות בדף המבזקים
 3. במידה ודוחים את הבקשה להודעות, הבקשה לא חוזרת שוב.
 
+#### prog.co.il אתר פרוג 
+
+הסרת ריבועי פרסום.
+
+
 
 
 
