@@ -1,3 +1,18 @@
 .samBannerUnit {
   display: none;
 }
+
+.samTextUnit
+.sam-swiper-container,
+.progad,
+.notices,
+.p-body-sidebar,
+.Striptext,
+.samCodeUnit,
+.overlay-container,
+.xenbros_popup,
+.p-body-sidebarCol,
+.samTextUnit,
+[data-type='ams_article']{
+  display: none;
+}

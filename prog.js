@@ -2,7 +2,7 @@ const DEL_SELECTOR = `
 
 `;
 
-const blackListJs = ['adBlockAction '];
+const blackListJs = ['adBlockAction', 'samOverlay'];
 
 function* actionForElement(el) {
   if(el.tagName == 'SCRIPT' && blackListJs.some(x => el.innerText.includes(x)))
