@@ -1,7 +1,9 @@
 .samBannerUnit,
+.samBannerUnit1,
 .samTextUnit,
-.samCodeUnit,
+.samCodeUnit:not([data-position^=container_header]),
 .sam-swiper-container,
-.overlay-container {
+.overlay-container:not([id]),
+.notices {
   display: none!important;
 }
