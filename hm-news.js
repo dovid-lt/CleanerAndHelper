@@ -21,7 +21,11 @@ script#advadsTrackingScript-js-extra,
 script#advanced-ads-responsive-js,
 script#advanced-ads-pro\\/cache_busting-js-extra,
 script#advanced-ads-layer-footer-js-js-extra,
-script#advads-ready
+script#advads-ready,
+
+button[onclick^="remove_banner"],
+
+div.post_content>div.elementor-widget-container>div[data-elementor-type="section"]
 `;
 
 const blackListJs = ['advads_passive_placements', 'advanced_ads_ready', 'Ads'];
