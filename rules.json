@@ -15,13 +15,21 @@
         "id": 3,
         "priority": 1,
         "action": { "type": "block" },
-        "condition": {"urlFilter": "||ext.kore.co.il||", "resourceTypes": ["script"] }
+        "condition": {"urlFilter": "||ext.kore.co.il|", "resourceTypes": ["script"] }
       },
       {
         "id": 4,
         "priority": 1,
         "action": { "type": "block" },
         "condition": {"urlFilter": "||advertising.jdn.co.il||", "resourceTypes": ["script"] }
+      },
+      {
+        "id": 5,
+        "priority": 1,
+        "action": { "type": "block" },
+        "domains" : ["www.kore.co.il"],
+        "condition": {"urlFilter": "||kore.co.il/*player.js*", "resourceTypes": ["script"] }
+        
       }
 
 ]

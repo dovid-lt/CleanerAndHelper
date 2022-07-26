@@ -1,6 +1,6 @@
 {
   "name": "Cleaner And Helper",
-  "version": "1.1.0",
+  "version": "1.2.1",
   "description": "Prevents annoying advertisements and improves convenience, designed for Netfree users.",
   "manifest_version": 3,
   "icons": {
@@ -70,9 +70,24 @@
         "general-mutation.js",
         "prog.js"
       ],
-      "css":["prog.css"]
+      "css": [
+        "prog.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://kcm.fm/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "kcm.js"
+      ]
     }
   ],
+  "web_accessible_resources": [{
+    "resources": ["kcm-em.js"],
+    "matches": ["https://kcm.fm/*"]
+  }],
   "permissions": [
     "declarativeNetRequestWithHostAccess"
   ],
@@ -81,7 +96,8 @@
     "https://info.jdn.co.il/*",
     "https://hm-news.co.il/*",
     "https://www.kore.co.il/*",
-    "https://www.prog.co.il/*"
+    "https://www.prog.co.il/*",
+    "https://kcm.fm/*"
   ],
   "declarative_net_request": {
     "rule_resources": [

@@ -2,6 +2,10 @@
 .samTextUnit,
 .samCodeUnit,
 .sam-swiper-container,
-.overlay-container {
-  display: none!important;
+.overlay-container,
+.right-ad-place,
+.left-ad-place,
+div[data-xf-init="sam-unit"],
+[class*="samBannerUnit"] {
+  display: none !important;
 }

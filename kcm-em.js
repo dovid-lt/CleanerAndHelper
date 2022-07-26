@@ -1,0 +1,1 @@
+Model.player.banner = undefined;
