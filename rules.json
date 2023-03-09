@@ -3,7 +3,7 @@
         "id": 1,
         "priority": 1,
         "action": { "type": "block" },
-        "condition": {"urlFilter": "||info.jdn.co.il||", "resourceTypes": ["main_frame"] }
+        "condition": {"urlFilter": "||info.jdn.co.il", "resourceTypes": ["main_frame"] }
       },
       {
         "id": 2,
@@ -15,21 +15,19 @@
         "id": 3,
         "priority": 1,
         "action": { "type": "block" },
-        "condition": {"urlFilter": "||ext.kore.co.il|", "resourceTypes": ["script"] }
+        "condition": {"urlFilter": "||ext.kore.co.il", "resourceTypes": ["script", "image", "sub_frame", "xmlhttprequest", "other"] }
       },
       {
         "id": 4,
         "priority": 1,
         "action": { "type": "block" },
-        "condition": {"urlFilter": "||advertising.jdn.co.il||", "resourceTypes": ["script"] }
+        "condition": {"urlFilter": "||advertising.jdn.co.il", "resourceTypes": ["script"] }
       },
+
       {
-        "id": 5,
+        "id": 6,
         "priority": 1,
         "action": { "type": "block" },
-        "domains" : ["www.kore.co.il"],
-        "condition": {"urlFilter": "||kore.co.il/*player.js*", "resourceTypes": ["script"] }
-        
+        "condition": {"urlFilter": "||srv.hm-news.co.il*", "resourceTypes": ["script"] }
       }
-
 ]

@@ -1,39 +1,20 @@
 const DEL_SELECTOR = `
-iframe[data-src^="https://ads.hm-news.co.il"],
-div[id^='advads'],
-script#flowplayer-js-extra,
-script#fv_player_pro-js,
-script#flowplayer-hlsjs-js,
-script#fv_player_pro-js-extra,
-script#flowplayer-js,
-style#fv_player_lightbox-css,
-div.elementor-widget-wp-widget-advads_ad_widget,
+script[src="https://cdn.jsdelivr.net/npm/lap-core-js@1.3.2"],
+iframe,
+#sticky_banner_bottom_desktop_btn2,
+#sticky_banner_left,
+#sticky_banner_right,
+#sticky_banner_bottom_desktop,
+div.elementor-widget-html[id^=sticky_banner]
 
-script#advanced-ads-advanced-js-js,
-script#advanced-ads-responsive-js-extra,
-script#advanced-ads-pro\\/cache_busting-js,
-script#advanced-ads-pro\\/cache_busting-js-extra,
-
-
-script#advadsTrackingDelayed-js,
-script#advadsTrackingScript-js,
-script#advadsTrackingScript-js-extra,
-script#advanced-ads-responsive-js,
-script#advanced-ads-pro\\/cache_busting-js-extra,
-script#advanced-ads-layer-footer-js-js-extra,
-script#advads-ready,
-
-button[onclick^="remove_banner"],
-
-div.post_content>div.elementor-widget-container>div[data-elementor-type="section"]
 `;
 
-const blackListJs = ['advads_passive_placements', 'advanced_ads_ready', 'Ads'];
+
 
 
 function* actionForElement(el) {
   if (!el.tagName) return;
-  if (el.matches(DEL_SELECTOR) || (el.tagName == 'SCRIPT' && blackListJs.some(x => el.innerText.includes(x))))
+  if (el.matches(DEL_SELECTOR))
     yield () => el.remove();
   else if (el.firstElementChild)
     for (const iterator of el.querySelectorAll(DEL_SELECTOR))
@@ -41,13 +22,11 @@ function* actionForElement(el) {
 
   if (el.matches('.elementor-widget-jet-video'))
     jetVideo(el);
-  else if (el.matches('.flowplayer'))
+  else if (el.matches('div.flowplayer'))
     flowplayer(el);
 }
 
 ObserveForDocument(actionForElement, document)
-
-
 
 function flowplayer(player) {
   let props;

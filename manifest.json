@@ -1,6 +1,6 @@
 {
   "name": "Cleaner And Helper",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Prevents annoying advertisements and improves convenience, designed for Netfree users.",
   "manifest_version": 3,
   "icons": {
@@ -94,8 +94,10 @@
   "host_permissions": [
     "https://www.jdn.co.il/*",
     "https://info.jdn.co.il/*",
+    "https://*.hm-news.co.il/*",
     "https://hm-news.co.il/*",
     "https://www.kore.co.il/*",
+    "https://*.kore.co.il/*",
     "https://www.prog.co.il/*",
     "https://kcm.fm/*"
   ],

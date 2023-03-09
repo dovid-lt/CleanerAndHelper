@@ -3,17 +3,7 @@
 .samTextUnit,
 .samCodeUnit:not([data-position^=container_header]),
 .sam-swiper-container,
-<<<<<<< HEAD
-.overlay-container,
-.right-ad-place,
-.left-ad-place,
-div[data-xf-init="sam-unit"],
-[class*="samBannerUnit"] {
-  display: none !important;
-}
-=======
 .overlay-container:not([id]),
 .notices {
   display: none!important;
 }
->>>>>>> 1f0a638e81bfd6ddcf21d7da137487f64a8c2f3d
