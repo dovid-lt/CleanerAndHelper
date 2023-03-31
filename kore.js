@@ -1,5 +1,6 @@
 
 const DEL_SELECTOR = `
+script[src^="/template/js/player.js?lu=2807"],
 #bottomFixed,
 .center-block,
 .visible-xlg`;
@@ -13,6 +14,8 @@ function* actionForElement(el) {
   else if (el.firstElementChild)
     for (const iterator of el.querySelectorAll(DEL_SELECTOR))
       yield () => iterator.remove();
+ 
+      
 }
 
 
@@ -28,3 +31,5 @@ if (dismisseExpire) {
     localStorage.setItem('onesignal-notification-prompt', JSON.stringify(data));
   }
 }
+
+
