@@ -1,5 +1,6 @@
 const DEL_SELECTOR = `
 div[id^='advads'],
+ul[id^='advads'],
 div[id^='div-gpt-ad'],
 .jdn-pirsum,
 script#flowplayer-js-extra,
@@ -25,6 +26,7 @@ script#advadsTrackingDelayed-js,
 script#advads-ready,
 script[src^='https://www.jdn.co.il/wp-content/uploads'],
 script[src^='https://www.jdn.co.il/wp-content/plugins/jdn_ads'],
+script[src='https://media.aso1.net/js/code.min.js'],
 
 iframe[src^='https://advertising'],
 iframe[loading="lazy"],
