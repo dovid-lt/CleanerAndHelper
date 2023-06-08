@@ -42,6 +42,10 @@ https://chrome.google.com/webstore/detail/abceolommehmfcheephklpllmcocgmol
 דילוג על פרסומת.
 
 
+#### hidabroot.js הידברות
+
+הסרת וידאו פרסום מקדים.
+
 
 
 

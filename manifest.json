@@ -1,6 +1,6 @@
 {
   "name": "Cleaner And Helper",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "Prevents annoying advertisements and improves convenience, designed for Netfree users.",
   "manifest_version": 3,
   "icons": {
@@ -82,6 +82,19 @@
       "js": [
         "kcm.js"
       ]
+    },
+    {
+      "matches": [
+        "https://www.hidabroot.org/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "general-mutation.js",
+        "hidabroot.js"
+      ],
+      "css": [
+        "prog.css"
+      ]
     }
   ],
   "web_accessible_resources": [{
@@ -99,7 +112,8 @@
     "https://www.kore.co.il/*",
     "https://*.kore.co.il/*",
     "https://www.prog.co.il/*",
-    "https://kcm.fm/*"
+    "https://kcm.fm/*",
+    "https://www.hidabroot.org/*"
   ],
   "declarative_net_request": {
     "rule_resources": [
