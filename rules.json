@@ -1,10 +1,10 @@
 [
-    {
-        "id": 1,
-        "priority": 1,
-        "action": { "type": "block" },
-        "condition": {"urlFilter": "||info.jdn.co.il", "resourceTypes": ["main_frame"] }
-      },
+  {
+    "id": 1,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {"urlFilter": "||info.jdn.co.il", "resourceTypes": ["main_frame"] }
+  },
       {
         "id": 2,
         "priority": 1,
@@ -15,15 +15,14 @@
         "id": 3,
         "priority": 1,
         "action": { "type": "block" },
-        "condition": {"urlFilter": "||ext.kore.co.il", "resourceTypes": ["script", "image", "sub_frame", "xmlhttprequest", "other"] }
+        "condition": {"urlFilter": "||ext.kore.co.il"}
       },
       {
         "id": 4,
         "priority": 1,
         "action": { "type": "block" },
-        "condition": {"urlFilter": "||advertising.jdn.co.il", "resourceTypes": ["script"] }
+        "condition": {"urlFilter": "||advertising.jdn.co.il" }
       },
-
       {
         "id": 6,
         "priority": 1,

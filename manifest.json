@@ -1,6 +1,6 @@
 {
   "name": "Cleaner And Helper",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Prevents annoying advertisements and improves convenience, designed for Netfree users.",
   "manifest_version": 3,
   "icons": {
@@ -11,7 +11,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://www.jdn.co.il/*"
+        "*://www.jdn.co.il/*"
       ],
       "run_at": "document_start",
       "js": [
@@ -21,7 +21,7 @@
     },
     {
       "matches": [
-        "https://hm-news.co.il/*"
+        "*://hm-news.co.il/*"
       ],
       "run_at": "document_start",
       "js": [
@@ -31,7 +31,7 @@
     },
     {
       "matches": [
-        "https://www.kore.co.il/*"
+        "*://www.kore.co.il/*"
       ],
       "run_at": "document_start",
       "js": [
@@ -41,7 +41,7 @@
     },
     {
       "matches": [
-        "https://www.kore.co.il/flashNews*"
+        "*://www.kore.co.il/flashNews*"
       ],
       "run_at": "document_start",
       "js": [
@@ -53,7 +53,7 @@
     },
     {
       "matches": [
-        "https://www.bahazit.co.il/*"
+        "*://www.bahazit.co.il/*"
       ],
       "run_at": "document_start",
       "js": [
@@ -63,7 +63,7 @@
     },
     {
       "matches": [
-        "https://www.prog.co.il/*"
+        "*://www.prog.co.il/*"
       ],
       "run_at": "document_start",
       "js": [
@@ -76,16 +76,16 @@
     },
     {
       "matches": [
-        "https://kcm.fm/*"
+        "*://kcm.fm/*"
       ],
-      "run_at": "document_idle",
+      "run_at": "document_start",
       "js": [
         "kcm.js"
       ]
     },
     {
       "matches": [
-        "https://www.hidabroot.org/*"
+        "*://www.hidabroot.org/*"
       ],
       "run_at": "document_start",
       "js": [
@@ -101,20 +101,6 @@
     "resources": ["kcm-em.js"],
     "matches": ["https://kcm.fm/*"]
   }],
-  "permissions": [
-    "declarativeNetRequestWithHostAccess"
-  ],
-  "host_permissions": [
-    "https://www.jdn.co.il/*",
-    "https://info.jdn.co.il/*",
-    "https://*.hm-news.co.il/*",
-    "https://hm-news.co.il/*",
-    "https://www.kore.co.il/*",
-    "https://*.kore.co.il/*",
-    "https://www.prog.co.il/*",
-    "https://kcm.fm/*",
-    "https://www.hidabroot.org/*"
-  ],
   "declarative_net_request": {
     "rule_resources": [
       {
@@ -123,5 +109,20 @@
         "path": "rules.json"
       }
     ]
-  }
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "optional_host_permissions": [
+    "*://www.jdn.co.il/*",
+    "*://info.jdn.co.il/*",
+    "*://*.hm-news.co.il/*",
+    "*://hm-news.co.il/*",
+    "*://www.kore.co.il/*",
+    "*://*.kore.co.il/*",
+    "*://www.prog.co.il/*",
+    "*://kcm.fm/*",
+    "*://www.hidabroot.org/*"
+  ]
 }
