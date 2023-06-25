@@ -1,6 +1,6 @@
 {
   "name": "Cleaner And Helper",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Prevents annoying advertisements and improves convenience, designed for Netfree users.",
   "manifest_version": 3,
   "icons": {
@@ -78,7 +78,7 @@
       "matches": [
         "*://kcm.fm/*"
       ],
-      "run_at": "document_start",
+      "run_at": "document_idle",
       "js": [
         "kcm.js"
       ]
