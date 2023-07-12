@@ -1,6 +1,6 @@
 
 const DEL_SELECTOR = `
-script[src^="/template/js/player.js?lu=2807"],
+script[src^="/template/js/player.js"],
 #bottomFixed,
 .center-block,
 .visible-xlg`;
