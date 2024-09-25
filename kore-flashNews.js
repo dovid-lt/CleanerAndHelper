@@ -27,8 +27,10 @@ document.addEventListener('DOMContentLoaded', function () {
     } while (!result.done)
   }
 
-  setTimeout(() => localStorage.setItem(key, last), counter ? Math.min(counter, 5) * 3000 : 5000);
-
+  setTimeout(() => {
+    localStorage.setItem(key, last)
+    document.querySelectorAll('.new-item').forEach(el => el.classList.remove('new-item'));
+  }, counter ? Math.min(counter, 5) * 3000 : 5000);
 });
 
 function humanDate(el, currDate) {
