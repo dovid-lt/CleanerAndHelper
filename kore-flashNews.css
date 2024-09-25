@@ -1,4 +1,4 @@
-.newsflash_list.ext-c>div.new-item {
+.newsflash_list > .new-item {
     opacity: 1;
     background-color: rgba(192,249,255,0.41);
     margin-bottom: 5px;
