@@ -4,7 +4,7 @@ const lastRead = localStorage.getItem(key);
 document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('newsFlash')?.remove();
 
-  let container = document.getElementById('listFlash');
+  let container = document.querySelector('.newsflash_list');
   let it = container.children[Symbol.iterator]()
   let last = null;
 
