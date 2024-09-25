@@ -1,7 +1,11 @@
 const LAST_NEWS_ID_STORAGE_KEY = 'lastNewsID';
 const NEW_ITEM_CLASS = 'unread';
 
-const markAllAsRead = () => document.querySelectorAll(`.${NEW_ITEM_CLASS}`).forEach(el => el.classList.remove(NEW_ITEM_CLASS));
+const markAllAsRead = () => {
+  document.querySelectorAll(`.${NEW_ITEM_CLASS}`).forEach(el => el.classList.remove(NEW_ITEM_CLASS));
+  localStorage.setItem(LAST_NEWS_ID_STORAGE_KEY, latestNewsId);
+}
+
 const markNewItems = (containers, lastReadId) => {
   let newItemsCount = 0;
   let latestNewsId;
@@ -24,10 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.getItem(LAST_NEWS_ID_STORAGE_KEY)
   );
 
-  setTimeout(() => {
-    localStorage.setItem(LAST_NEWS_ID_STORAGE_KEY, latestNewsId);
-    markAllAsRead()
-  }, Math.min(newItemsCount, 5) * 3000 || 5000);
+  setTimeout(markAllAsRead, Math.min(newItemsCount, 5) * 3000 || 5000);
 
   const markAllAsReadButton = document.createElement('div');
   markAllAsReadButton.textContent = 'סמן הכל כנקרא';
