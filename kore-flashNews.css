@@ -1,4 +1,4 @@
-.newsflash_list > .new-item {
+.newsflash_list > .item.unread {
     opacity: 1;
     background-color: rgba(192,249,255,0.41);
     margin-bottom: 5px;
