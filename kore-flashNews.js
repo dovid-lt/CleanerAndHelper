@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }, Math.min(newItemsCount, 5) * 3000 || 5000);
 });
 
-$('.inner_sec_title').after(
-  $('<div>סמן הכל כנקרא</div>')
-    .on('click', markAllAsRead)
-    .css('cursor', 'pointer')
-);
+const markAllAsReadButton = document.createElement('div');
+markAllAsReadButton.textContent = 'סמן הכל כנקרא';
+markAllAsReadButton.style.cursor = 'pointer';
+markAllAsReadButton.addEventListener('click', markAllAsRead);
+document.querySelector('.inner_sec_title').after(markAllAsReadButton);
