@@ -23,8 +23,8 @@ const markNewItems = (lastReadId) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  const savedLastRead = localStorage.getItem(LAST_NEWS_ID_STORAGE_KEY)
-  const { newItemsCount } = markNewItems(savedLastRead || 0);
+  const savedLastRead = localStorage.getItem(LAST_NEWS_ID_STORAGE_KEY) || 0
+  const { newItemsCount } = markNewItems(savedLastRead);
 
   let remainingTime = Math.min(newItemsCount, 5) * 3000 || 5000;
   let timerInterval;
@@ -63,16 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }},
     { text: 'סמן הכל כלא נקרא', onClick: () => {
       clearInterval(timerInterval);
-      markNewItems(savedLastRead)
-      localStorage.setItem(LAST_NEWS_ID_STORAGE_KEY, savedLastRead);
+      markNewItems(0)
+      localStorage.setItem(LAST_NEWS_ID_STORAGE_KEY, 0);
     }}
   ].forEach(({ text, onClick }) => {
     const button = document.createElement('div');
-    Object.assign(button, {
-      textContent: text,
-      style: { cursor: 'pointer' },
-      onclick: onClick
-    });
+    button.textContent = text;
+    button.style.cursor = 'pointer';
+    button.onclick = onClick;
     extraButtonsContainer.appendChild(button);
   });
   document.querySelector('.inner_sec_title').after(extraButtonsContainer);
