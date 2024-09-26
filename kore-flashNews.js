@@ -26,15 +26,43 @@ document.addEventListener('DOMContentLoaded', () => {
   const savedLastRead = localStorage.getItem(LAST_NEWS_ID_STORAGE_KEY)
   const { newItemsCount } = markNewItems(savedLastRead || 0);
 
-  const autoReadTime = setTimeout(markAllAsRead, Math.min(newItemsCount, 5) * 3000 || 5000);
+  let remainingTime = Math.min(newItemsCount, 5) * 3000 || 5000;
+  let timerInterval;
+
+  const startTimer = () => {
+    timerInterval = setInterval(() => {
+      remainingTime -= 1000;
+      if (remainingTime <= 0) {
+        clearInterval(timerInterval);
+        markAllAsRead();
+      }
+    }, 1000);
+  };
+
+  const stopTimer = () => {
+    clearInterval(timerInterval);
+  };
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopTimer();
+    } else {
+      startTimer();
+    }
+  });
+
+  startTimer();
 
   const extraButtonsContainer = document.createElement('div');
   Object.assign(extraButtonsContainer.style, { display: 'flex', gap: '10px' });
 
   [
-    { text: 'סמן הכל כנקרא', onClick: markAllAsRead },
+    { text: 'סמן הכל כנקרא', onClick: () => {
+      clearInterval(timerInterval);
+      markAllAsRead();
+    }},
     { text: 'סמן הכל כלא נקרא', onClick: () => {
-      clearTimeout(autoReadTime);
+      clearInterval(timerInterval);
       markNewItems(savedLastRead)
       localStorage.setItem(LAST_NEWS_ID_STORAGE_KEY, savedLastRead);
     }}
