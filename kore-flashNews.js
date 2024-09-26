@@ -54,8 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
   startTimer();
 
   const extraButtonsContainer = document.createElement('div');
-  Object.assign(extraButtonsContainer.style, { display: 'flex', gap: '10px' });
-
+  extraButtonsContainer.style.display = 'flex';
+  extraButtonsContainer.style.gap = '10px';
   [
     { text: 'סמן הכל כנקרא', onClick: () => {
       clearInterval(timerInterval);
