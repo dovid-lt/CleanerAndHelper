@@ -1,77 +1,134 @@
 const LAST_NEWS_ID_STORAGE_KEY = 'lastNewsID';
 const NEW_ITEM_CLASS = 'unread';
-
-const markAllAsRead = () => {
-  document.querySelectorAll(`.newsflash_list .item.${NEW_ITEM_CLASS}`).forEach(el => el.classList.remove(NEW_ITEM_CLASS));
-  const latestNewsId = document.querySelector('.newsflash_list .item').id;
-  localStorage.setItem(LAST_NEWS_ID_STORAGE_KEY, latestNewsId);
-}
-
-const markAllAsUnread = (savedLastRead) => {
- 
-}
-
-const markNewItems = (lastReadId) => {
-  let newItemsCount = 0;
-  document.querySelectorAll('.newsflash_list .item').forEach(newsItem => {
-      if (lastReadId && newsItem.id <= lastReadId) return;
-      newsItem.classList.add(NEW_ITEM_CLASS);
-      newItemsCount++;
-  });
-
-  return { newItemsCount };
-};
+const AUTO_MARK_READ_TIME_PER_ITEM = 3300; // milliseconds per item
+const AUTO_MARK_READ_MAX_TIME = 2 * 60 * 1000; // maximum 2 minutes
+const TIMER_INTERVAL_STEP = 1000; // milliseconds
 
 document.addEventListener('DOMContentLoaded', () => {
-  const savedLastRead = localStorage.getItem(LAST_NEWS_ID_STORAGE_KEY) || 0
-  const { newItemsCount } = markNewItems(savedLastRead);
+  const savedLastRead = parseInt(localStorage.getItem(LAST_NEWS_ID_STORAGE_KEY), 10) || 0;
+  const initialUnreadItems = new Set();
+  const newsItems = document.querySelectorAll('.newsflash_list .item');
+  let newItemsCount = 0;
 
-  let remainingTime = Math.min(newItemsCount, 5) * 3000 || 5000;
+  newsItems.forEach(item => {
+    const itemId = parseInt(item.id, 10);
+    if (itemId > savedLastRead) {
+      item.classList.add(NEW_ITEM_CLASS);
+      initialUnreadItems.add(itemId);
+      newItemsCount++;
+    }
+  });
+
+  let remainingTime = Math.min(newItemsCount * AUTO_MARK_READ_TIME_PER_ITEM, AUTO_MARK_READ_MAX_TIME);
   let timerInterval;
 
+  const extraButtonsContainer = document.createElement('div');
+  extraButtonsContainer.style.display = 'flex';
+  extraButtonsContainer.style.alignItems = 'center';
+  extraButtonsContainer.style.gap = '5px';
+
+  const markAsReadButton = document.createElement('span');
+  markAsReadButton.textContent = 'סמן הכל כנקרא';
+  markAsReadButton.style.cursor = 'pointer';
+
+  const countdownElement = document.createElement('span');
+  countdownElement.style.display = 'none';
+
+  const markBackAsUnreadButton = document.createElement('span');
+  markBackAsUnreadButton.textContent = ' (סמן חזרה כלא נקרא)';
+  markBackAsUnreadButton.style.cursor = 'pointer';
+  markBackAsUnreadButton.style.display = 'none';
+
+  const separator1 = document.createElement('span');
+  separator1.textContent = '|';
+  separator1.style.margin = '0 5px';
+
+  const markAsUnreadButton = document.createElement('span');
+  markAsUnreadButton.textContent = 'סמן הכל כלא נקרא';
+  markAsUnreadButton.style.cursor = 'pointer';
+
+  const updateCountdown = () => {
+    const seconds = Math.ceil(remainingTime / 1000);
+    countdownElement.textContent = `(סימון אוטומטי בעוד ${seconds} שניות)`;
+  };
+
   const startTimer = () => {
-    timerInterval = setInterval(() => {
-      remainingTime -= 1000;
-      if (remainingTime <= 0) {
-        clearInterval(timerInterval);
-        markAllAsRead();
-      }
-    }, 1000);
+    if (newItemsCount > 0) {
+      updateCountdown();
+      countdownElement.style.display = 'inline';
+      markBackAsUnreadButton.style.display = 'none';
+      timerInterval = setInterval(() => {
+        remainingTime -= TIMER_INTERVAL_STEP;
+        updateCountdown();
+        if (remainingTime <= 0) {
+          clearInterval(timerInterval);
+          markAllAsRead();
+          countdownElement.style.display = 'none';
+          markBackAsUnreadButton.style.display = 'inline';
+        }
+      }, TIMER_INTERVAL_STEP);
+    } else {
+      countdownElement.style.display = 'none';
+      markBackAsUnreadButton.style.display = 'inline';
+    }
   };
 
   const stopTimer = () => {
     clearInterval(timerInterval);
+    countdownElement.style.display = 'none';
   };
 
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      stopTimer();
-    } else {
-      startTimer();
-    }
+    document.hidden ? stopTimer() : startTimer();
   });
+
+  const markAllAsRead = () => {
+    newsItems.forEach(item => item.classList.remove(NEW_ITEM_CLASS));
+    localStorage.setItem(LAST_NEWS_ID_STORAGE_KEY, newsItems[0].id);
+  };
+
+  const restoreInitialUnreadItems = () => {
+    newsItems.forEach(item => {
+      const itemId = parseInt(item.id, 10);
+      item.classList.toggle(NEW_ITEM_CLASS, initialUnreadItems.has(itemId));
+    });
+    localStorage.setItem(LAST_NEWS_ID_STORAGE_KEY, savedLastRead);
+  };
+
+  markAsReadButton.onclick = () => {
+    stopTimer();
+    markAllAsRead();
+    markBackAsUnreadButton.style.display = 'inline';
+    newItemsCount = 0;
+  };
+
+  markBackAsUnreadButton.onclick = () => {
+    stopTimer();
+    restoreInitialUnreadItems();
+    remainingTime = Math.min(newItemsCount * AUTO_MARK_READ_TIME_PER_ITEM, AUTO_MARK_READ_MAX_TIME);
+    markBackAsUnreadButton.style.display = 'none';
+    startTimer();
+  };
+
+  markAsUnreadButton.onclick = () => {
+    stopTimer();
+    newsItems.forEach(item => item.classList.add(NEW_ITEM_CLASS));
+    localStorage.setItem(LAST_NEWS_ID_STORAGE_KEY, 0);
+    newItemsCount = newsItems.length;
+    remainingTime = Math.min(newItemsCount * AUTO_MARK_READ_TIME_PER_ITEM, AUTO_MARK_READ_MAX_TIME);
+    markBackAsUnreadButton.style.display = 'none';
+    startTimer();
+  };
+
+  extraButtonsContainer.append(
+    markAsReadButton,
+    countdownElement,
+    markBackAsUnreadButton,
+    separator1,
+    markAsUnreadButton
+  );
+
+  document.querySelector('.inner_sec_title').after(extraButtonsContainer);
 
   startTimer();
-
-  const extraButtonsContainer = document.createElement('div');
-  extraButtonsContainer.style.display = 'flex';
-  extraButtonsContainer.style.gap = '10px';
-  [
-    { text: 'סמן הכל כנקרא', onClick: () => {
-      clearInterval(timerInterval);
-      markAllAsRead();
-    }},
-    { text: 'סמן הכל כלא נקרא', onClick: () => {
-      clearInterval(timerInterval);
-      markNewItems(0)
-      localStorage.setItem(LAST_NEWS_ID_STORAGE_KEY, 0);
-    }}
-  ].forEach(({ text, onClick }) => {
-    const button = document.createElement('div');
-    button.textContent = text;
-    button.style.cursor = 'pointer';
-    button.onclick = onClick;
-    extraButtonsContainer.appendChild(button);
-  });
-  document.querySelector('.inner_sec_title').after(extraButtonsContainer);
 });
