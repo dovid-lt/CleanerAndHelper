@@ -1,8 +1,8 @@
 const LAST_NEWS_ID_STORAGE_KEY = 'lastNewsID';
 const NEW_ITEM_CLASS = 'unread';
-const AUTO_MARK_READ_TIME_PER_ITEM = 2800; // milliseconds per item
-const AUTO_MARK_READ_MAX_TIME = 2 * 60 * 1000; // maximum 2 minutes
-const TIMER_INTERVAL_STEP = 1000; // milliseconds
+const AUTO_MARK_READ_TIME_PER_ITEM = 2800;
+const AUTO_MARK_READ_MAX_TIME = 2 * 60 * 1000;
+const TIMER_INTERVAL_STEP = 1000;
 
 document.addEventListener('DOMContentLoaded', () => {
   const savedLastRead = parseInt(localStorage.getItem(LAST_NEWS_ID_STORAGE_KEY), 10) || 0;
@@ -64,12 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
           clearInterval(timerInterval);
           markAllAsRead();
           countdownElement.style.display = 'none';
-          markBackAsUnreadButton.style.display = 'inline';
+          markBackAsUnreadButton.style.display = 'inline'; // הצגת הכפתור רק לאחר הטיימר
         }
       }, TIMER_INTERVAL_STEP);
     } else {
       countdownElement.style.display = 'none';
-      markBackAsUnreadButton.style.display = 'inline';
+      markBackAsUnreadButton.style.display = 'none'; // לא להציג אם אין פריטים חדשים
     }
   };
 
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
   markAsReadButton.onclick = () => {
     stopTimer();
     markAllAsRead();
-    markBackAsUnreadButton.style.display = 'inline';
+    markBackAsUnreadButton.style.display = 'none'; // לא להציג את הכפתור בלחיצה ידנית
     newItemsCount = 0;
   };
 
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     stopTimer();
     restoreInitialUnreadItems();
     markBackAsUnreadButton.style.display = 'none';
-    // Do not start the timer again
+    // לא להתחיל את הטיימר מחדש
   };
 
   markAsUnreadButton.onclick = () => {
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem(LAST_NEWS_ID_STORAGE_KEY, 0);
     newItemsCount = newsItems.length;
     markBackAsUnreadButton.style.display = 'none';
-    // Do not start the timer again
+    // לא להתחיל את הטיימר מחדש
   };
 
   extraButtonsContainer.append(
