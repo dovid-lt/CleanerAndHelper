@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const savedLastRead = localStorage.getItem(LAST_NEWS_ID_STORAGE_KEY)
   const { newItemsCount } = markNewItems(savedLastRead || 0);
 
-  setTimeout(markAllAsRead, Math.min(newItemsCount, 5) * 3000 || 5000);
+  const autoReadTime = setTimeout(markAllAsRead, Math.min(newItemsCount, 5) * 3000 || 5000);
 
   const extraButtonsContainer = document.createElement('div');
   Object.assign(extraButtonsContainer.style, { display: 'flex', gap: '10px' });
@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
   [
     { text: 'סמן הכל כנקרא', onClick: markAllAsRead },
     { text: 'סמן הכל כלא נקרא', onClick: () => {
+      clearTimeout(autoReadTime);
       markNewItems(savedLastRead)
       localStorage.setItem(LAST_NEWS_ID_STORAGE_KEY, savedLastRead);
     }}
