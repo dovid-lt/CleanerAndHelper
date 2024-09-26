@@ -7,6 +7,10 @@ const markAllAsRead = () => {
   localStorage.setItem(LAST_NEWS_ID_STORAGE_KEY, latestNewsId);
 }
 
+const markAllAsUnread = (savedLastRead) => {
+ 
+}
+
 const markNewItems = (lastReadId) => {
   let newItemsCount = 0;
   document.querySelectorAll('.newsflash_list .item').forEach(newsItem => {
@@ -19,13 +23,28 @@ const markNewItems = (lastReadId) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  const { newItemsCount } = markNewItems(localStorage.getItem(LAST_NEWS_ID_STORAGE_KEY) || 0);
+  const savedLastRead = localStorage.getItem(LAST_NEWS_ID_STORAGE_KEY)
+  const { newItemsCount } = markNewItems(savedLastRead || 0);
 
   setTimeout(markAllAsRead, Math.min(newItemsCount, 5) * 3000 || 5000);
 
-  const markAllAsReadButton = document.createElement('div');
-  markAllAsReadButton.textContent = 'סמן הכל כנקרא';
-  markAllAsReadButton.style.cursor = 'pointer';
-  markAllAsReadButton.addEventListener('click', markAllAsRead);
-  document.querySelector('.inner_sec_title').after(markAllAsReadButton);
+  const extraButtonsContainer = document.createElement('div');
+  Object.assign(extraButtonsContainer.style, { display: 'flex', gap: '10px' });
+
+  [
+    { text: 'סמן הכל כנקרא', onClick: markAllAsRead },
+    { text: 'סמן הכל כלא נקרא', onClick: () => {
+      markNewItems(savedLastRead)
+      localStorage.setItem(LAST_NEWS_ID_STORAGE_KEY, savedLastRead);
+    }}
+  ].forEach(({ text, onClick }) => {
+    const button = document.createElement('div');
+    Object.assign(button, {
+      textContent: text,
+      style: { cursor: 'pointer' },
+      onclick: onClick
+    });
+    extraButtonsContainer.appendChild(button);
+  });
+  document.querySelector('.inner_sec_title').after(extraButtonsContainer);
 });
