@@ -3,6 +3,16 @@ const lastRead = localStorage.getItem(key);
 
 document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('newsFlash')?.remove();
+  
+    const btnRefresh = document.createElement("button");
+  btnRefresh.setAttribute("class", "btn");
+  btnRefresh.innerText = "סמן הכל כלא נקרא";
+  btnRefresh.addEventListener('click', () => {
+    for (const child of document.querySelector('#listFlash').children) {
+      child.classList.add('new-item');
+    }
+  })
+  document.querySelector("#articles").insertAdjacentElement('afterbegin', btnRefresh)
 
   let container = document.getElementById('listFlash');
   let it = container.children[Symbol.iterator]()
