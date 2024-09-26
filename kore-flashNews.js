@@ -1,6 +1,6 @@
 const LAST_NEWS_ID_STORAGE_KEY = 'lastNewsID';
 const NEW_ITEM_CLASS = 'unread';
-const AUTO_MARK_READ_TIME_PER_ITEM = 3300; // milliseconds per item
+const AUTO_MARK_READ_TIME_PER_ITEM = 2800; // milliseconds per item
 const AUTO_MARK_READ_MAX_TIME = 2 * 60 * 1000; // maximum 2 minutes
 const TIMER_INTERVAL_STEP = 1000; // milliseconds
 
@@ -105,9 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
   markBackAsUnreadButton.onclick = () => {
     stopTimer();
     restoreInitialUnreadItems();
-    remainingTime = Math.min(newItemsCount * AUTO_MARK_READ_TIME_PER_ITEM, AUTO_MARK_READ_MAX_TIME);
     markBackAsUnreadButton.style.display = 'none';
-    startTimer();
+    // Do not start the timer again
   };
 
   markAsUnreadButton.onclick = () => {
@@ -115,9 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
     newsItems.forEach(item => item.classList.add(NEW_ITEM_CLASS));
     localStorage.setItem(LAST_NEWS_ID_STORAGE_KEY, 0);
     newItemsCount = newsItems.length;
-    remainingTime = Math.min(newItemsCount * AUTO_MARK_READ_TIME_PER_ITEM, AUTO_MARK_READ_MAX_TIME);
     markBackAsUnreadButton.style.display = 'none';
-    startTimer();
+    // Do not start the timer again
   };
 
   extraButtonsContainer.append(
