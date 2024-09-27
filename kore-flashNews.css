@@ -1,7 +1,9 @@
-#listFlash.ext-c>div.new-item {
+.newsflash_list > .item.unread {
     opacity: 1;
-    background-color: rgb(192, 248, 255);
-    margin-bottom: 13px;
+    background-color: rgba(148,227,236,0.14);
+    margin-bottom: 5px;
+    margin-top: 5px;
     padding: 2px 9px;
     border-radius: 3px;
+    padding: 5px !important;
 }
