@@ -45,6 +45,7 @@
       ],
       "run_at": "document_start",
       "js": [
+        "jquery-3.7.1.min.js",
         "kore-flashNews.js"
       ],
       "css": [
