@@ -70,5 +70,19 @@
         "script"
       ]
     }
+  },
+  {
+      "id": 7,
+      "priority": 1,
+      "action": {
+        "type": "block"
+      },
+      "condition": {
+        "urlFilter": "||www.kore.co.il/system/ad_manager/get_all_banners",
+        "resourceTypes": [
+          "xmlhttprequest",
+          "main_frame"
+        ]
+      }
   }
 ]
